@@ -62,15 +62,32 @@ function playerDetails(){
     body.appendChild(playerDetailContainer);
 
 
-    const submitPlayerDetails = document.createElement("button");
-    submitPlayerDetails.id = "submitPlayerDetails";
-    submitPlayerDetails.textContent = "Submit";
-    playerDetailContainer.appendChild(submitPlayerDetails);
+    const submitButton = document.createElement("button");
+    submitButton.id = "submitButton";
+    submitButton.textContent = "Submit";
+    playerDetailContainer.appendChild(submitButton);
 }
+function submitPlayerDetails(){
+    const submitButton = document.querySelector("#submitButton");
+    submitButton.addEventListener("click", () =>{
+        let player1Name = document.querySelector("#player1Name");
+        let player1Mark = document.querySelector("#player1Mark");
+        let player2Name = document.querySelector("#player2Name") ;
+        let player2Mark = document.querySelector("#player2Mark") ;
 
+        function processPlayer(name, mark){
+            return { name , mark}
+        }
+
+        const player1 = processPlayer(player1Name.value, player1Mark.value);
+        const player2 = processPlayer(player2Name.value, player2Mark.value);
+        console.log(player1, player2);
+    });
+}
 //events
 overlay();
 playerDetails();
+submitPlayerDetails();
 
 
 

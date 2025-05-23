@@ -2,7 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    outline: 1px solid red;
+    
 }
 body{
     display: grid;
@@ -56,8 +56,9 @@ main{
 
 #playerDetailContainer{
     position: absolute;
-    top: 25%;
-    left: 30%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: white;
     border-radius: 1rem;
     display: grid;
@@ -83,8 +84,19 @@ main{
     gap:1rem;
 }
 
-#submitPlayerDetails{
+#submitButton{
     background-color: rgb(255, 126, 126);
     color: white;
     grid-area: submit;
+    padding: 1rem;
+    border: none;
+    border-radius: 1rem;
+}
+#submitButton:hover{
+    background-color: rgb(247, 184, 184);
+}
+
+input{
+    border: 1px solid black;
+    padding:0.8rem;
 }
