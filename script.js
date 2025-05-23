@@ -75,13 +75,21 @@ function submitPlayerDetails(){
         let player2Name = document.querySelector("#player2Name") ;
         let player2Mark = document.querySelector("#player2Mark") ;
 
-        function processPlayer(name, mark){
+
+        function processPlayer(name, mark, nameDisplay, markDisplay, number){
+            let playerNameDisplay = document.querySelector("#" + nameDisplay + "Display");
+            playerNameDisplay.textContent = "Player " + number + " Name: " + name;
+            let playerMarkDisplay = document.querySelector("#" + markDisplay + "Display");
+            playerMarkDisplay.textContent = "Mark: " + mark;
             return { name , mark}
         }
 
-        const player1 = processPlayer(player1Name.value, player1Mark.value);
-        const player2 = processPlayer(player2Name.value, player2Mark.value);
-        console.log(player1, player2);
+        const player1 = processPlayer(player1Name.value, player1Mark.value, "player1Name" , "player1Mark" , "1");
+        const player2 = processPlayer(player2Name.value, player2Mark.value, "player2Name" , "player2Mark", "2");
+        
+
+
+
     });
 }
 //events
