@@ -11,54 +11,32 @@ function overlay(){
 function playerDetails(){
     const playerDetailContainer = document.createElement("div");
     playerDetailContainer.id = "playerDetailContainer";
-    
-    const player1DetailContainer = document.createElement("div");
-    player1DetailContainer.id = "player1DetailContainer";
+        
+    for (let i = 1; i <= 2; i++) {
+        let playerNoDetailContainer = document.createElement("div");
+        playerNoDetailContainer.id = "player" + i + "DetailContainer";
 
-    const player2DetailContainer = document.createElement("div");
-    player2DetailContainer.id = "player2DetailContainer";
+        let playerNameLabel = document.createElement("label");
+        playerNameLabel.htmlFor = "player" + i + "Name";
+        playerNameLabel.textContent = "Player " + i + " Name: ";
+        
+        let playerNameInput = document.createElement("input");
+        playerNameInput.id = "player" + i + "Name";
 
-    const player1NameLabel = document.createElement("label");
-    player1NameLabel.htmlFor = "player1Name";
-    player1NameLabel.textContent = "Player 1 Name: ";
-    const player1NameInput = document.createElement("input");
-    player1NameInput.id = "player1Name";
+        let playerMarkLabel = document.createElement("label");
+        playerMarkLabel.htmlFor = "player" + i + "Mark";
+        playerMarkLabel.textContent = "Player " + i + " Mark: " ; 
 
+        let playerMarkInput = document.createElement("input");
+        playerMarkInput.id = "player" + i + "Mark";
 
-    const player1MarkLabel = document.createElement("label");
-    player1MarkLabel.htmlFor = "player1Mark";
-    player1MarkLabel.textContent = "Player 1 Mark: "
-    const player1MarkInput = document.createElement("input");
-    player1MarkInput.id = "player1Mark";
+        playerNoDetailContainer.appendChild(playerNameLabel);
+        playerNoDetailContainer.appendChild(playerNameInput);
+        playerNoDetailContainer.appendChild(playerMarkLabel);
+        playerNoDetailContainer.appendChild(playerMarkInput);
+        playerDetailContainer.appendChild(playerNoDetailContainer);
 
-
-    const player2NameLabel = document.createElement("label");
-    player2NameLabel.htmlFor = "player2Name";
-    player2NameLabel.textContent = "Player 2 Name: ";
-    const player2NameInput = document.createElement("input");
-    player2NameInput.id = "player2Name";
-
-
-    const player2MarkLabel = document.createElement("label");
-    player2MarkLabel.htmlFor = "player2Mark";
-    player2MarkLabel.textContent = "Player 2 Mark: "
-    const player2MarkInput = document.createElement("input");
-    player2MarkInput.id = "player2Mark";
-
-
-    player1DetailContainer.appendChild(player1NameLabel);
-    player1DetailContainer.appendChild(player1NameInput);
-    player1DetailContainer.appendChild(player1MarkLabel);
-    player1DetailContainer.appendChild(player1MarkInput);
-    
-    player2DetailContainer.appendChild(player2NameLabel);
-    player2DetailContainer.appendChild(player2NameInput);
-    player2DetailContainer.appendChild(player2MarkLabel);
-    player2DetailContainer.appendChild(player2MarkInput);
-
-
-    playerDetailContainer.appendChild(player1DetailContainer);
-    playerDetailContainer.appendChild(player2DetailContainer);
+}
     body.appendChild(playerDetailContainer);
 
 
@@ -68,6 +46,7 @@ function playerDetails(){
     playerDetailContainer.appendChild(submitButton);
 }
 function submitPlayerDetails(){
+    
     const submitButton = document.querySelector("#submitButton");
     submitButton.addEventListener("click", () =>{
         let player1Name = document.querySelector("#player1Name");
@@ -77,10 +56,14 @@ function submitPlayerDetails(){
 
 
         function processPlayer(name, mark, nameDisplay, markDisplay, number){
+            let score = 0;
             let playerNameDisplay = document.querySelector("#" + nameDisplay + "Display");
             playerNameDisplay.textContent = "Player " + number + " Name: " + name;
             let playerMarkDisplay = document.querySelector("#" + markDisplay + "Display");
-            playerMarkDisplay.textContent = "Mark: " + mark;
+            playerMarkDisplay.textContent = "Player " + number + " Mark: " + mark;
+            let scoreDisplay = document.querySelector("#player" + number + "Score");
+            scoreDisplay.textContent = score;
+            playerMarkDisplay.textContent = "Player " + number + " Mark: " + mark;
             return { name , mark}
         }
 
@@ -88,11 +71,87 @@ function submitPlayerDetails(){
         const player2 = processPlayer(player2Name.value, player2Mark.value, "player2Name" , "player2Mark", "2");
         
 
+        const overlay = document.querySelector("#overlay");
+        const playerDetailContainer = document.querySelector("#playerDetailContainer");
 
+        body.removeChild(overlay);
+        body.removeChild(playerDetailContainer);
+    
 
+        //i guess start the game here
+        playGame(player1, player2);
     });
+
+}
+
+function playGame(player1, player2){
+    let board = [
+        ["" , "" , ""],
+        ["" , "" , ""],
+        ["" , "" , ""],
+        
+    ];
+    const gameBoard = document.querySelector("#gameBoard");
+    const buttons = gameBoard.querySelectorAll("button");    
+    playerTurn = player1;
+
+    function playerMove(button, playerTurn, board){
+        button.disabled = true;
+        button.textContent = playerTurn.mark;
+        let row = Number(button.id[1]);
+        let column  = Number(button.id[3]);
+        board[row-1][column-1] = playerTurn.mark;
+        if (playerTurn == player1){
+            playerTurn = player2;
+        }else{
+            playerTurn = player1;
+        }
+        console.log(board);
+    }
+
+
+    buttons.forEach( button => {
+        button.addEventListener("click", () => {
+            switch (button.id) {
+                case "r1c1":
+                    playerMove(button, playerTurn, board);
+
+                    break;
+                case "r1c2":
+                    playerMove(button, playerTurn, board);                  
+                    break;
+                case "r1c3":
+                    playerMove(button, playerTurn, board);
+                    break;
+                case "r2c1":
+                    playerMove(button, playerTurn, board);                
+                    break;
+                case "r2c2":
+                    playerMove(button, playerTurn, board);                    
+                    break;
+                case "r2c3":
+                    playerMove(button, playerTurn, board);                    
+                    break;
+                case "r3c1":
+                    playerMove(button, playerTurn, board);                    
+                    break;
+                case "r3c2":
+                    playerMove(button, playerTurn, board);                    
+                    break;
+                case "r3c3":
+                    playerMove(button, playerTurn, board);                    
+                    break;
+
+            
+                default:
+                    break;
+            }
+        });
+    });
+
 }
 //events
+
 overlay();
 playerDetails();
 submitPlayerDetails();

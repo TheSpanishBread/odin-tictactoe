@@ -5,32 +5,36 @@
     
 }
 body{
-    display: grid;
-    padding: 4rem 10rem;
+    display: flex;
+    flex-direction: column;
+    padding: 4rem 1rem;
     gap:4rem;
     text-align: center;
     justify-content: center;
 }
 main{
     display: grid;
-    grid-template-columns: repeat(auto-fit, 1fr);
+    grid-template-columns: 1fr 2fr 1fr;
     grid-template-areas: 
     "player1 gameBoard player2";
-    gap: 5rem;
+    gap: 1rem;
 }
 #gameBoard {
     grid-area: gameBoard;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
+    gap: 1rem;
     width: 30vw;
-    height: 40vh;
-    gap:1rem;
+    height: 30vw;
+    align-self: center;
+    justify-self: center;
 }
 
 #gameBoard > *{
     background-color: antiquewhite;
-
+    height: 100%;
+    width: 100%;
     
 }
 
@@ -99,4 +103,16 @@ main{
 input{
     border: 1px solid black;
     padding:0.8rem;
+}
+
+#player1, #player2{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: rgba(255, 255, 255, 0.676);
+    padding: 2rem;
+    border: 1px solid black;
+    border-radius: 1rem;
+    text-align: left;
+    gap:2rem;
 }
