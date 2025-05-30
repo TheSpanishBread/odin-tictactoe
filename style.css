@@ -58,7 +58,7 @@ main{
     left: 0px;
 }
 
-#playerDetailContainer{
+#playerDetailContainer, #winnerContainer{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -67,12 +67,12 @@ main{
     border-radius: 1rem;
     display: grid;
     gap:1rem;
-    padding:5rem;
+    padding:5rem;    
+}
+#playerDetailContainer{
     grid-template-areas: 
     "player1 player2"
     "submit submit";
-
-    
 }
 #player1DetailContainer{
     grid-area: player1;
@@ -115,4 +115,9 @@ input{
     border-radius: 1rem;
     text-align: left;
     gap:2rem;
+}
+
+#gameBoard button{
+    color:black;
+    font-size: 3rem;
 }

@@ -1,4 +1,4 @@
-(function (){
+(function ticTacToe(){
 //variables
 const body = document.querySelector("body");
 
@@ -49,26 +49,24 @@ function submitPlayerDetails(){
     
     const submitButton = document.querySelector("#submitButton");
     submitButton.addEventListener("click", () =>{
-        let player1Name = document.querySelector("#player1Name");
-        let player1Mark = document.querySelector("#player1Mark");
-        let player2Name = document.querySelector("#player2Name") ;
-        let player2Mark = document.querySelector("#player2Mark") ;
 
 
-        function processPlayer(name, mark, nameDisplay, markDisplay, number){
+        function processPlayer(name, mark, number){
             let score = 0;
-            let playerNameDisplay = document.querySelector("#" + nameDisplay + "Display");
-            playerNameDisplay.textContent = "Player " + number + " Name: " + name;
-            let playerMarkDisplay = document.querySelector("#" + markDisplay + "Display");
-            playerMarkDisplay.textContent = "Player " + number + " Mark: " + mark;
-            let scoreDisplay = document.querySelector("#player" + number + "Score");
+            let playerNameDisplay = document.querySelector("#player" + number + "NameDisplay");
+            playerNameDisplay.textContent = name;
+            
+            let playerMarkDisplay = document.querySelector("#player" + number + "MarkDisplay");
+            playerMarkDisplay.textContent = mark;
+
+            let scoreDisplay = document.querySelector("#player" + number + "ScoreDisplay");
             scoreDisplay.textContent = score;
-            playerMarkDisplay.textContent = "Player " + number + " Mark: " + mark;
-            return { name , mark}
+
+            return { name , mark, score, number}
         }
 
-        const player1 = processPlayer(player1Name.value, player1Mark.value, "player1Name" , "player1Mark" , "1");
-        const player2 = processPlayer(player2Name.value, player2Mark.value, "player2Name" , "player2Mark", "2");
+        const player1 = processPlayer(player1Name.value, player1Mark.value , "1");
+        const player2 = processPlayer(player2Name.value, player2Mark.value, "2");
         
 
         const overlay = document.querySelector("#overlay");
@@ -88,64 +86,174 @@ function playGame(player1, player2){
     let board = [
         ["" , "" , ""],
         ["" , "" , ""],
-        ["" , "" , ""],
-        
-    ];
+        ["" , "" , ""] ];
+    let prevPlayer;
     const gameBoard = document.querySelector("#gameBoard");
     const buttons = gameBoard.querySelectorAll("button");    
     playerTurn = player1;
-
+/////////////////////////////////////////////////////////////////
     function playerMove(button, playerTurn, board){
         button.disabled = true;
         button.textContent = playerTurn.mark;
         let row = Number(button.id[1]);
         let column  = Number(button.id[3]);
         board[row-1][column-1] = playerTurn.mark;
+        let winCondition = evaluatePattern();
+
+        if (winCondition == false){
         if (playerTurn == player1){
-            playerTurn = player2;
+                playerTurn = player2;
+            }else{
+                playerTurn = player1;
+            }
+            return playerTurn;
         }else{
-            playerTurn = player1;
+           return  playerTurn;
         }
-        console.log(board);
+
     }
+    function evaluatePattern(){
+            if ((board[0][0] == board[1][1] && board[0][0]== board[2][2] && board[0][0] !== "") ||
+                 (board[0][2] == board[1][1] && board[1][1]== board[2][0] && board[0][2] !== "")){
+                return true;
+            }
+         
+            for (let l = 0; l<=2 ;l++){
+                    if (board[l][0] == board[l][1] && board[l][0]== board[l][2] && board[l][0] !== ""){
+                        return true;
+                    }
+                    if (board[0][l] == board[1][l] && board[0][l]== board[2][l] && board[0][l] !== ""){
+                        return true;
 
+                    }
 
+            }
+            /////tie
+            let counter = 0;
+            board.forEach(row => {
+                row.forEach(column => {
+                    if (column !== ""){
+                        counter +=1;
+                        console.log(counter);
+                    }
+                });
+            });
+            if (counter == 9){
+                 board = [
+                    ["" , "" , ""],
+                    ["" , "" , ""],
+                    ["" , "" , ""] ];
+                buttons.forEach(button => {
+                    button.textContent = "";
+                    button.disabled = false;
+                    
+                });
+                alert("Tie");
+                 }
+                return false;
+    }
+    function  evaluateWinner(){
+        if (prevPlayer == playerTurn){
+            let winnerScore = document.querySelector("#player" + playerTurn.number + "ScoreDisplay");
+            playerTurn.score += 1;
+            winnerScore.textContent = playerTurn.score;
+            console.log(playerTurn.name);
+            board = [
+        ["" , "" , ""],
+        ["" , "" , ""],
+        ["" , "" , ""] ];
+            buttons.forEach(button => {
+                button.textContent = "";
+                button.disabled = false;
+            });
+            if (playerTurn.score == 3){
+                function resetScores(score, number){
+                    let scoreDisplay = document.querySelector("#player" + number + "ScoreDisplay");
+
+                    scoreDisplay.textContent = "0";
+                    score = 0;
+                }
+                
+                resetScores(player1.score, "1");
+                resetScores(player2.score, "2");
+                
+                alert(playerTurn.name + " Wins!");/*
+                overlay();
+                const winnerContainer = document.createElement("div");
+                winnerContainer.id = "winnerContainer"
+                const winnerName = document.createElement("p");
+                winnerName.textContent = playerTurn.name + " WINS!";
+                const restart = document.createElement("button");
+                restart.id = "restart";
+                restart.textContent = "Play Again?";
+
+                winnerContainer.appendChild(winnerName);
+                winnerContainer.appendChild(restart);
+                body.appendChild(winnerContainer);
+
+                restart.addEventListener("click", () =>{
+                        playGame(player1, player2);
+                });*/
+            }
+    }}
+
+//////////////////////////////////////////////////////////////
     buttons.forEach( button => {
         button.addEventListener("click", () => {
+            
             switch (button.id) {
                 case "r1c1":
-                    playerMove(button, playerTurn, board);
-
+                    prevPlayer = playerTurn;
+                    //evaluate tie
+                    playerTurn = playerMove(button, playerTurn, board);
+                    evaluateWinner();
                     break;
                 case "r1c2":
-                    playerMove(button, playerTurn, board);                  
+                    prevPlayer = playerTurn;
+                    playerTurn = playerMove(button, playerTurn, board);
+                    evaluateWinner();    
                     break;
                 case "r1c3":
-                    playerMove(button, playerTurn, board);
+                    prevPlayer = playerTurn;
+                    playerTurn = playerMove(button, playerTurn, board);
+                    evaluateWinner();
                     break;
                 case "r2c1":
-                    playerMove(button, playerTurn, board);                
+                    prevPlayer = playerTurn;
+                    playerTurn = playerMove(button, playerTurn, board);
+                    evaluateWinner();     
                     break;
                 case "r2c2":
-                    playerMove(button, playerTurn, board);                    
+                    prevPlayer = playerTurn;
+                    playerTurn = playerMove(button, playerTurn, board);
+                    evaluateWinner();        
                     break;
                 case "r2c3":
-                    playerMove(button, playerTurn, board);                    
+                    prevPlayer = playerTurn;
+                    playerTurn = playerMove(button, playerTurn, board);
+                    evaluateWinner();            
                     break;
                 case "r3c1":
-                    playerMove(button, playerTurn, board);                    
+                    prevPlayer = playerTurn;
+                    playerTurn = playerMove(button, playerTurn, board);
+                    evaluateWinner();                
                     break;
                 case "r3c2":
-                    playerMove(button, playerTurn, board);                    
+                    prevPlayer = playerTurn;
+                    playerTurn = playerMove(button, playerTurn, board);
+                    evaluateWinner();          
                     break;
                 case "r3c3":
-                    playerMove(button, playerTurn, board);                    
+                    prevPlayer = playerTurn;
+                    playerTurn = playerMove(button, playerTurn, board);
+                    evaluateWinner();
                     break;
 
             
                 default:
                     break;
             }
+            //evaluate score fucntion
         });
     });
 
