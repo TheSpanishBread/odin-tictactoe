@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odin Project : Tic-tac-toe</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    <div class="playerRegister flexColumn" id="playerRegister">
+        <div class="playerRegisterTitle">
+            <h1>Welcome to Project: Tic-Tac-Toe!</h1>
+        </div>
+        <form action="" class="flexColumn">
+            <h2>Enter Players' Information</h2>
+            <fieldset>
+                <h1 class="player1Title">Player 1</h1>
+                <label for="player1Name" class="player1NameLabel">Player 1 Name: </label>
+                <input type="text" id="player1Name" name="player1Name" class="player1NameInput">
+                <label for="player1Mark" class="player1MarkLabel">Player 1 Mark: </label>
+                <input type="text" id="player1Mark" name="player1Mark" class="player1MarkInput">
+
+                <h1 class="player2Title">Player 2</h1>
+                <label for="player2Name" class="player2NameLabel">Player 2 Name: </label>
+                <input type="text" id="player2Name" name="player2Name" class="player2NameInput">
+                <label for="player2Mark" class="player2MarkLabel">Player 2 Mark: </label>
+                <input type="text" id="player2Mark" name="player2Mark" class="player2MarkInput">
+
+            </fieldset>
+            <button id="submitPlayers">Submit!</button>
+        </form>
+    </div>
+    <header>
+        <h1>Odin Project: Tic-Tac-Toe</h1>
+    </header>
+    <main>
+        <div class="game flexRow" id="game">
+            
+            <div class="gamePlayer1Info flexColumn">
+                <h1>Player 1</h1>
+                <div class="player1NameDisplay">
+                    <h2>Name:</h2>
+                    <h2 id="player1NameDisplay"></h2>
+                </div>
+                <div class="player1MarkDisplay">    
+                    <h2>Mark:</h2>
+                    <h2 id="player1MarkDisplay"></h2>
+                </div>
+                <div class="player1ScoreDisplay">
+                    <h2>Score:</h2>
+                    <h2 id="player1ScoreDisplay"></h2>
+                </div>
+            </div>
+            <div class="gameBoard">
+                <button id="1-1"></button><button id="1-2"></button><button id="1-3"></button>
+                <button id="2-1"></button><button id="2-2"></button><button id="2-3"></button>
+                <button id="3-1"></button><button id="3-2"></button><button id="3-3"></button>                  
+            </div>
+            <div class="gamePlayer2Info flexColumn">
+                <h1>Player 2</h1>
+                <div class="player2NameDisplay">
+                    <h2>Name:</h2>
+                    <h2 id="player2NameDisplay"></h2>
+                </div>
+                <div class="player2MarkDisplay">    
+                    <h2>Mark:</h2>
+                    <h2 id="player2MarkDisplay"></h2>
+                </div>
+                <div class="player2ScoreDisplay">
+                    <h2>Score:</h2>
+                    <h2 id="player2ScoreDisplay"></h2>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>Project: Tic-tac-toe || Developed by Spanish Bread</p>
+    </footer>
+</body>
+</html>
