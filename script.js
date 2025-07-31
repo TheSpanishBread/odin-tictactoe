@@ -152,12 +152,14 @@
             
             if (gameInstance.checkWin() == true){
                 console.log("win!");
+                alert(variables.players[playerIndex].name + " Wins!")
                 variables.players[playerIndex].addScore();
                 document.querySelector("#player"+ (playerIndex+1) + "ScoreDisplay").textContent = variables.players[playerIndex].getScore(); 
                 gameInstance.resetBoard();
 
                 if (variables.players[playerIndex].getScore() == 3){
                     console.log("Game Over!");
+                    alert("Game Over! " + variables.players[playerIndex].name + " Wins! Click 'OK' to start a new game.")
                     variables.players[0].resetScore();
                     document.querySelector("#player"+ (1) + "ScoreDisplay").textContent = 0;
                     variables.players[1].resetScore();
@@ -172,7 +174,7 @@
             //add here if tied
                 if (gameInstance.checkTie() == true){
                     console.log("tie");
-
+                    alert("Tie! Press 'Ok' to continue.")
                     gameInstance.resetBoard();  
                     console.log("reset");
                 }
